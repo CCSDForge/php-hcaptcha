@@ -8,13 +8,15 @@ class HcaptchaResponse
     private $errors = [];
     private $raw = null;
 
-    function __construct($response)
+    public function __construct($response)
     {
         if ($response === null) {
             $this->errors[] = 'json-parse-failure';
         } else {
             $this->success = $response['success'];
-            $this->errors = $response['error-codes'];
+            if (isset($response['success'])) {
+                $this->errors = $response['error-codes'];
+            }
             $this->raw = $response;
         }
     }
